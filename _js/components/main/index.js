@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
-  Alert,
 } from 'react-native';
 
 import {  Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
@@ -79,6 +78,7 @@ class MenuScreen extends React.Component {
 
     this._setQuoteOfTheDay(0);
 
+
   }
 
   _setQuoteOfTheDay = (do_math) => {
@@ -114,23 +114,18 @@ class MenuScreen extends React.Component {
 
    Marker.markText({
       src: this.state.dayimage,
-      text: this.state.quote, 
-      X: 30,
-      Y: 30, 
-      color: '#FF0000',
+      text: this.state.quote.replace(/(\S+\s*){1,7}/g, "$&\n"),
+      position: 'topLeft', 
+      X: 10,
+      Y: 700, 
+      color: '#000',
       fontName: 'Arial-BoldItalicMT',
-      fontSize: 12,
-      shadowStyle: {
-          dx: 10.5,
-          dy: 20.8,
-          radius: 20.9,
-          color: '#ff00ff'
-      },
+      fontSize: 36,
       textBackgroundStyle: {
           type: 'stretchX',
-          paddingX: 10,
-          paddingY: 10,
-          color: '#0f0'
+          paddingX: 50,
+          paddingY: 50,
+          color: '#fff',
       },
       scale: 1, 
       quality: 100
@@ -140,18 +135,13 @@ class MenuScreen extends React.Component {
           markResult: res
        })
     
-    //alert("the path is"+res)
-    // android ios does not need file:// 
     const shareOptions = {
-      title: 'Teilen',
-      message: 'some message',
       url: 'file://'+res,
   };
 
     Share.open(shareOptions)
     .then((res) => { console.log(res) })
     .catch((err) => { err && console.log(err); });
-
 
 
    }).catch((err) => {
