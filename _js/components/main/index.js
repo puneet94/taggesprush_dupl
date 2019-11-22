@@ -44,7 +44,7 @@ class MenuScreen extends React.Component {
       <View>
       <TouchableOpacity onPress={ () => { navigation.getParam('_shareQuoteOfTheDay')(); }}>
           <Image
-            style={{width: 32, height: 32}}
+            style={{width: 24, height: 24}}
             source={require('../../../_images/basics/icon_share.png')}
           />
       </TouchableOpacity>
@@ -56,7 +56,7 @@ class MenuScreen extends React.Component {
         <MenuTrigger customStyles={{ TriggerTouchableComponent: TouchableOpacity }} >
           
         <Image
-            style={{width: 32, height: 32}}
+            style={{width: 24, height: 24}}
             source={require('../../../_images/basics/icon_dots.png')}
           />
         </MenuTrigger>
@@ -184,15 +184,15 @@ class MenuScreen extends React.Component {
             paddingRight: 15,}}> 
         
         <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,0)}>
-          <Text style={{color: 'white'}}>TODAY</Text>
+          <Text style={{color: 'white',fontFamily:'ptsans',fontSize: 16}}>Today</Text>
         </TouchableOpacity> 
 
         <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,-1)}>
-          <Text style={{color: 'white'}}>ONE DAY BACK</Text>
+          <Text style={{color: 'white',fontFamily:'ptsans',fontSize: 16}}>One day back</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,-2)}>
-          <Text style={{color: 'white'}}>TWO DAYS BACK</Text>
+          <Text style={{color: 'white',fontFamily:'ptsans',fontSize: 16}}>Two day back</Text>
         </TouchableOpacity>
 
       </View>
@@ -208,7 +208,7 @@ class MenuScreen extends React.Component {
     />
 
 
-          <Text style={{color: '#968154', fontSize: 16, textAlign:'center', lineHeight: 23, padding: 10, top: -80}}>{this.state.quote}</Text>
+          <Text style={{color: '#968154', fontFamily:'ptsans', fontSize: 18, textAlign:'center', lineHeight: 25, padding: 15, top: -80}}>{this.state.quote}</Text>
 
     
     </ScrollView>

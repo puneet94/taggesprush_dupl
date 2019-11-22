@@ -35,10 +35,10 @@ const StackConfig = {
   headerLayoutPreset: 'left',
 	defaultNavigationOptions: {
 		headerStyle: {
-		  backgroundColor: 'white',
+      backgroundColor: 'white',
 		},
 		headerTintColor: '#968154',
-		headerTitleStyle: { color: '#968154' },
+		headerTitleStyle: { color: '#968154', fontFamily: 'ptsans', fontWeight:'bold', textTransform:'uppercase'},
 		headerBackTitle: null,
   }
 }
