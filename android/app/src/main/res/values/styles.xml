@@ -7,4 +7,8 @@
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
+     <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
 </resources>
+
