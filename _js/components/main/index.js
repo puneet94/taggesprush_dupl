@@ -13,7 +13,8 @@ import {
 
 import {  Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
 import { getDay, getDayOfYear } from 'date-fns'
-import * as data from '../../../MOCK_DATA.json';
+import * as data2019 from '../../../data_2019.json';
+import * as data2020 from '../../../data_2020.json';
 import Marker, { Position, ImageFormat } from 'react-native-image-marker'
 import Share from 'react-native-share';
 
@@ -96,6 +97,13 @@ class MenuScreen extends React.Component {
       var d = new Date();
       var d_do_math = d.setDate(d.getDate()+do_math)
       
+      var cmm = d.getFullYear();
+      if (cmm == 2019) {
+        var data = data2019;
+      } else {
+        var data = data2020;
+      }
+
       this.setState(
         {
           day: getDayOfYear( d_do_math ),
@@ -115,16 +123,14 @@ class MenuScreen extends React.Component {
    Marker.markText({
       src: this.state.dayimage,
       text: this.state.quote.replace(/(\S+\s*){1,7}/g, "$&\n"),
-      position: 'topLeft', 
-      X: 10,
-      Y: 700, 
+      position: 'bottomCenter', 
       color: '#000',
       fontName: 'Arial-BoldItalicMT',
       fontSize: 36,
       textBackgroundStyle: {
           type: 'stretchX',
-          paddingX: 50,
-          paddingY: 50,
+          paddingX: 0,
+          paddingY: 0,
           color: '#fff',
       },
       scale: 1, 
