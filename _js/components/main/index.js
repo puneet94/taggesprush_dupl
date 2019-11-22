@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
+  ImageBackground,
 } from 'react-native';
 
 import {  Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
@@ -37,31 +38,38 @@ class MenuScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
   
     return {
-      title: "Main!",
+      title: "Main",
       headerRight: 
       <View style={{flexDirection: 'row'}}>
       <View>
       <TouchableOpacity onPress={ () => { navigation.getParam('_shareQuoteOfTheDay')(); }}>
-        <Text>SHARE</Text>
-        </TouchableOpacity>
+          <Image
+            style={{width: 32, height: 32}}
+            source={require('../../../_images/basics/icon_share.png')}
+          />
+      </TouchableOpacity>
         
         </View>
       <Menu
       style={{marginRight: 10,}}
       onSelect={value =>  navigation.navigate(value)}>
         <MenuTrigger customStyles={{ TriggerTouchableComponent: TouchableOpacity }} >
-          <View style={{width: 30, height:30, backgroundColor:'red'}}></View>
+          
+        <Image
+            style={{width: 32, height: 32}}
+            source={require('../../../_images/basics/icon_dots.png')}
+          />
         </MenuTrigger>
         <MenuOptions optionsContainerStyle={{width: 200, marginTop:8, backgroundColor: 'white'}}>
         <MenuOption value={'Settings'} style={{width: 200,}}>
             <Text>settings</Text>
           </MenuOption>
-          <View style={{backgroundColor: 'grey', height: 1}}></View>
+          <View style={{backgroundColor: '#cccccc', height: 1}}></View>
           <MenuOption value={'Imprint'} style={{width: 200,}}>
             <Text>imprint</Text>
           </MenuOption>
 
-          <View style={{backgroundColor: 'grey', height: 1}}></View>
+          <View style={{backgroundColor: '#cccccc', height: 1}}></View>
           <MenuOption value={'PrivacyPolicy'} style={{width: 200}}>
             <Text>privacy policy</Text>
           </MenuOption>
@@ -85,13 +93,13 @@ class MenuScreen extends React.Component {
   _setQuoteOfTheDay = (do_math) => {
 
       var images = [
-        require('../../../_images/day_1.png'),
-        require('../../../_images/day_2.png'),
-        require('../../../_images/day_3.png'),
-        require('../../../_images/day_4.png'),
-        require('../../../_images/day_5.png'),
-        require('../../../_images/day_6.png'),
-        require('../../../_images/day_7.png'),
+        require('../../../_images/day_1.jpg'),
+        require('../../../_images/day_2.jpg'),
+        require('../../../_images/day_3.jpg'),
+        require('../../../_images/day_4.jpg'),
+        require('../../../_images/day_5.jpg'),
+        require('../../../_images/day_6.jpg'),
+        require('../../../_images/day_7.jpg'),
       ];
 
       var d = new Date();
@@ -124,7 +132,7 @@ class MenuScreen extends React.Component {
       src: this.state.dayimage,
       text: this.state.quote.replace(/(\S+\s*){1,7}/g, "$&\n"),
       position: 'bottomCenter', 
-      color: '#000',
+      color: '#968154',
       fontName: 'Arial-BoldItalicMT',
       fontSize: 36,
       textBackgroundStyle: {
@@ -159,44 +167,49 @@ class MenuScreen extends React.Component {
    })
 
   }
+
   
     render(){
     
     return (
     
-    <View>
-      <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
+    <View style={{flex:1}}>
+
+      <View style={{flexDirection: 'row',
+            justifyContent:'space-between',
+            backgroundColor:'#23859e',
+            height: 40,
+            padding: 10,
+            paddingLeft: 15,
+            paddingRight: 15,}}> 
         
         <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,0)}>
-          <Text>TODAY</Text>
-        </TouchableOpacity>
+          <Text style={{color: 'white'}}>TODAY</Text>
+        </TouchableOpacity> 
 
         <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,-1)}>
-          <Text> One day back </Text>
+          <Text style={{color: 'white'}}>ONE DAY BACK</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,-2)}>
-          <Text> Two days back </Text>
+          <Text style={{color: 'white'}}>TWO DAYS BACK</Text>
         </TouchableOpacity>
 
       </View>
-    <ScrollView>
 
-    <View>
+    <ScrollView style={{flex:1}}>
+
+
 
     <Image
-      resizeMode={'cover'}
-      style={{ height: Dimensions.get('window').width/2, width: Dimensions.get('window').width }}
+      resizeMode={'contain'}
+      style={{ height: Dimensions.get('window').width, width: Dimensions.get('window').width }}
       source={this.state.dayimage}
     />
 
-    </View>
-        <Text>{"Main"}</Text>
-        <Text>DAY OF THE YEAR {this.state.day}</Text>
-        <Text>WEEKDAY</Text>
-        <Text>{this.state.weekday}</Text>
-        <Text>Quote of the Day</Text>
-        <Text>{this.state.quote}</Text>
+
+          <Text style={{color: '#968154', fontSize: 16, textAlign:'center', lineHeight: 23, padding: 10, top: -80}}>{this.state.quote}</Text>
+
     
     </ScrollView>
 

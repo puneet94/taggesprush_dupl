@@ -30,6 +30,18 @@ import ImprintScreen from "./_js/components/imprint";
 import PrivacyPolicyScreen from "./_js/components/privacyPolicy";
 
 
+const StackConfig = {
+  initialRouteName: 'Main',
+  headerLayoutPreset: 'left',
+	defaultNavigationOptions: {
+		headerStyle: {
+		  backgroundColor: 'white',
+		},
+		headerTintColor: '#968154',
+		headerTitleStyle: { color: '#968154' },
+		headerBackTitle: null,
+  }
+}
 
 const AppNavigator = createAppContainer(createStackNavigator(
   {
@@ -38,9 +50,7 @@ const AppNavigator = createAppContainer(createStackNavigator(
     PrivacyPolicy: PrivacyPolicyScreen,
     Settings: SettingsScreen
   },
-  {
-    initialRouteName: 'Main',
-  }
+  StackConfig
 ));
 
 
