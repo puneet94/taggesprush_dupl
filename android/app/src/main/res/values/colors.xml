@@ -1,4 +1,5 @@
 <resources>
     <color name="colorPrimary">#23859e</color>
     <color name="colorWhite">#ffffff</color>
+    <color name="white">#FFF</color>
 </resources>
