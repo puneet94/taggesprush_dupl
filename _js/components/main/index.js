@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 import {  Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
-import { getDay, getDayOfYear } from 'date-fns'
+import { getDay, getDayOfYear,getISODay } from 'date-fns'
 import * as data2019 from '../../../data_2019.json';
 import * as data2020 from '../../../data_2020.json';
 import Marker, { Position, ImageFormat } from 'react-native-image-marker'
@@ -38,7 +38,7 @@ class MenuScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
   
     return {
-      title: "Main",
+      title: "Paul des Tages",
       headerRight: 
       <View style={{flexDirection: 'row'}}>
       <View>
@@ -62,16 +62,16 @@ class MenuScreen extends React.Component {
         </MenuTrigger>
         <MenuOptions optionsContainerStyle={{width: 200, marginTop:8, backgroundColor: 'white'}}>
         <MenuOption value={'Settings'} style={{width: 200,}}>
-            <Text>settings</Text>
+            <Text style={{fontFamily:'ptsans',fontSize: 16, color: '#968154'}}>Einstellungen</Text>
           </MenuOption>
           <View style={{backgroundColor: '#cccccc', height: 1}}></View>
           <MenuOption value={'Imprint'} style={{width: 200,}}>
-            <Text>imprint</Text>
+            <Text style={{fontFamily:'ptsans',fontSize: 16, color: '#968154'}}>Impressum</Text>
           </MenuOption>
 
           <View style={{backgroundColor: '#cccccc', height: 1}}></View>
           <MenuOption value={'PrivacyPolicy'} style={{width: 200}}>
-            <Text>privacy policy</Text>
+            <Text style={{fontFamily:'ptsans',fontSize: 16, color: '#968154'}}>Datenschutz</Text>
           </MenuOption>
         </MenuOptions>
       </Menu>
@@ -84,13 +84,13 @@ class MenuScreen extends React.Component {
     navigation.setParams({
       _shareQuoteOfTheDay: this._shareQuoteOfTheDay,
     })
-
+    this._setNavigation(0);
     this._setQuoteOfTheDay(0);
 
 
   }
 
-  _setQuoteOfTheDay = (do_math) => {
+  _setQuoteOfTheDay = (do_math,navIndex) => {
 
       var images = [
         require('../../../_images/day_1.jpg'),
@@ -102,6 +102,7 @@ class MenuScreen extends React.Component {
         require('../../../_images/day_7.jpg'),
       ];
 
+
       var d = new Date();
       var d_do_math = d.setDate(d.getDate()+do_math)
       
@@ -112,15 +113,60 @@ class MenuScreen extends React.Component {
         var data = data2020;
       }
 
+
+      if(navIndex == 1 ) {
+        this.setState(
+          {
+          fontWeightnavIndex0: 'normal',
+          fontWeightnavIndex1: 'bold',
+          fontWeightnavIndex2: 'normal',
+        });
+      } else if (navIndex == 2) {
+        this.setState(
+          {
+          fontWeightnavIndex0: 'normal',
+          fontWeightnavIndex1: 'normal',
+          fontWeightnavIndex2: 'bold',
+        }); 
+      }
+      else {
+        this.setState(
+          {
+          fontWeightnavIndex0: 'bold',
+          fontWeightnavIndex1: 'normal',
+          fontWeightnavIndex2: 'normal',
+        }); 
+      }
+
       this.setState(
         {
           day: getDayOfYear( d_do_math ),
-          weekday: getDay( d_do_math ),
+          weekday: getISODay( d_do_math ),
           quote: data[getDayOfYear(d_do_math)-1]['quote'],
-          dayimage: images[getDay( d_do_math )-1],
+          dayimage: images[getISODay( d_do_math )-1],
         }
       );
   }
+
+
+  _setNavigation = (do_math) => {
+    var weekDays = [
+      'Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'
+    ]
+
+    var d = new Date();
+    var d_do_math = d.setDate(d.getDate()+do_math)
+    
+    this.setState(
+      {
+        oneDayBack: weekDays[getISODay( d_do_math )-1],
+        twoDayBack: weekDays[getISODay( d_do_math )-2]
+      }
+    );
+
+  }
+
+
 
   _shareQuoteOfTheDay = () => {
 
@@ -182,19 +228,23 @@ class MenuScreen extends React.Component {
             padding: 10,
             paddingLeft: 15,
             paddingRight: 15,}}> 
+        <View style={{flex:1,borderRightColor: 'white', borderRightWidth: 1,}} >
+          <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,0,0)}>
+            <Text style={{color: 'white', textAlign:'center', fontFamily:'ptsans',fontSize: 16, fontWeight: this.state.fontWeightnavIndex0}}>Heute</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{flex:1,borderRightColor: 'white', borderRightWidth: 1}} >
+          <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,-1,1)}>
+            <Text style={{color: 'white', textAlign:'center', fontFamily:'ptsans',fontSize: 16,fontWeight: this.state.fontWeightnavIndex1}}>{this.state.oneDayBack}</Text>
+          </TouchableOpacity>
+        </View>
         
-        <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,0)}>
-          <Text style={{color: 'white',fontFamily:'ptsans',fontSize: 16}}>Today</Text>
-        </TouchableOpacity> 
-
-        <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,-1)}>
-          <Text style={{color: 'white',fontFamily:'ptsans',fontSize: 16}}>One day back</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,-2)}>
-          <Text style={{color: 'white',fontFamily:'ptsans',fontSize: 16}}>Two day back</Text>
-        </TouchableOpacity>
-
+        <View style={{flex:1,}} >
+          <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,-2,2)}>
+            <Text style={{color: 'white', textAlign:'center', fontFamily:'ptsans', fontSize: 16,fontWeight: this.state.fontWeightnavIndex2}}>{this.state.twoDayBack}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
     <ScrollView style={{flex:1}}>

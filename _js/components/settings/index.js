@@ -58,7 +58,14 @@ class SettingsScreen extends React.Component {
 			NOTIFICATION_CHECK: false,
 			alarmTimeDate: new Date()
 		}
-	}
+  }
+  
+  static navigationOptions = ({ navigation }) => {
+  
+    return {
+      title: "Einstellungen",
+    };
+  }
       changeAlarm = () => {
 		if (this.state.NOTIFICATION_CHECK ) {
 			
@@ -69,7 +76,7 @@ class SettingsScreen extends React.Component {
 					let alarmDate = moment()
 						.format(NOTIFICATION_DATE_FORMAT) + " " + this.state.ALARM_TIME;
 					scheduleLocalNotification(
-						"alarmText  " ,
+						"HEUTE ist Mein bester Tag!",
                         alarmDate,
                         1,
                         'day',
@@ -139,13 +146,12 @@ class SettingsScreen extends React.Component {
       }
       renderDateTime(){
         if(this.state.ALARM_TIME){
-            return [<TouchableOpacity key="1" onPress={() => this.setState({ isDateTimePickerVisible: true })}>
-            {<Text>
-                {this.state.ALARM_TIME}
+            return [<TouchableOpacity  style={{flex: 1,}} key="1" onPress={() => this.setState({ isDateTimePickerVisible: true })}>
+            {<Text style={{color: 'black', textAlign:'right', fontFamily:'ptsans',fontSize: 16, color: '#23859e'}}>
+                {this.state.ALARM_TIME} Uhr 
             </Text>}
             </TouchableOpacity>,
             <View key="2">{this.state.isDateTimePickerVisible?<DateTimePicker
-                
                 
                 onChange={this.handleDatePicked}
                
@@ -160,18 +166,25 @@ class SettingsScreen extends React.Component {
     render() {
         const { show, date, mode } = this.state;
       return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text>Settings!</Text>
-          
-				<Switch
-						onValueChange={this.onNotificationValueChange} value={this.state.NOTIFICATION_CHECK}
-				/>
-         
+        <View style={{ flex: 1, padding: 15}}>
 
-                    {this.state.NOTIFICATION_CHECK &&<View style={{marginTop:50}}>
-                    {this.renderDateTime()}
 
-                    </View>}
+          <View style={{flexDirection: 'row', justifyContent:'space-between', paddingBottom: 20,}}>
+
+
+            <Text style={{color: 'black', fontFamily:'ptsans',fontSize: 16,}}>Benachrichtigungen</Text>
+
+            <Switch
+            onValueChange={this.onNotificationValueChange} value={this.state.NOTIFICATION_CHECK}
+            />
+        
+        </View>
+
+        {this.state.NOTIFICATION_CHECK &&<View style={{flexDirection: 'row',justifyContent:'space-between',}}>
+        <Text style={{flex: 1, color: 'black', fontFamily:'ptsans',fontSize: 16,}}>Benachrichtigungszeit</Text>
+        {this.renderDateTime()}
+
+        </View>}
         
   
         </View>
