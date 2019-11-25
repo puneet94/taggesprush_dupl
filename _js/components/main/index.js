@@ -80,17 +80,18 @@ class MenuScreen extends React.Component {
   }
 
   componentDidMount() {
+    
     const { navigation } = this.props
     navigation.setParams({
       _shareQuoteOfTheDay: this._shareQuoteOfTheDay,
     })
-    this._setNavigation(0);
+
     this._setQuoteOfTheDay(0);
 
 
   }
 
-  _setQuoteOfTheDay = (do_math,navIndex) => {
+  _setQuoteOfTheDay = (navIndex) => {
 
       var images = [
         require('../../../_images/day_1.jpg'),
@@ -102,32 +103,53 @@ class MenuScreen extends React.Component {
         require('../../../_images/day_7.jpg'),
       ];
 
-
-      var d = new Date();
-      var d_do_math = d.setDate(d.getDate()+do_math)
+      var weekDays = [
+        'Montag',
+        'Dienstag',
+        'Mittwoch',
+        'Donnerstag',
+        'Freitag',
+        'Samstag',
+        'Sonntag'
+      ]
       
-      var cmm = d.getFullYear();
+      var today = new Date().setDate(new Date().getDate())
+      
+      var oneDayBack = new Date().setDate(new Date().getDate() -1);
+
+      var twoDayBack = new Date().setDate(new Date().getDate() -2);
+      
+      var cmm = new Date().getFullYear();
+
       if (cmm == 2019) {
         var data = data2019;
       } else {
         var data = data2020;
       }
-
-
+  
       if(navIndex == 1 ) {
+        
         this.setState(
           {
           fontWeightnavIndex0: 'normal',
           fontWeightnavIndex1: 'bold',
           fontWeightnavIndex2: 'normal',
-        });
+          day: getDayOfYear(oneDayBack),
+          weekday: getISODay(oneDayBack),
+          quote: data[getDayOfYear(oneDayBack)-1]['quote'],
+          dayimage: images[getISODay( oneDayBack)-1],
+        })
       } else if (navIndex == 2) {
         this.setState(
           {
           fontWeightnavIndex0: 'normal',
           fontWeightnavIndex1: 'normal',
           fontWeightnavIndex2: 'bold',
-        }); 
+          day: getDayOfYear( twoDayBack ),
+          weekday: getISODay( twoDayBack ),
+          quote: data[getDayOfYear(twoDayBack)-1]['quote'],
+          dayimage: images[getISODay(twoDayBack)-1],
+        })
       }
       else {
         this.setState(
@@ -135,37 +157,22 @@ class MenuScreen extends React.Component {
           fontWeightnavIndex0: 'bold',
           fontWeightnavIndex1: 'normal',
           fontWeightnavIndex2: 'normal',
-        }); 
+          day: getDayOfYear( today ),
+          weekday: getISODay( today ),
+          quote: data[getDayOfYear(today)-1]['quote'],
+          dayimage: images[getISODay(today)-1],
+        })
       }
 
       this.setState(
         {
-          day: getDayOfYear( d_do_math ),
-          weekday: getISODay( d_do_math ),
-          quote: data[getDayOfYear(d_do_math)-1]['quote'],
-          dayimage: images[getISODay( d_do_math )-1],
+          today: weekDays[getISODay( today )-1],
+          oneDayBack: weekDays[getISODay( oneDayBack )-1],
+          twoDayBack: weekDays[getISODay( twoDayBack )-1]
         }
       );
+      
   }
-
-
-  _setNavigation = (do_math) => {
-    var weekDays = [
-      'Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'
-    ]
-
-    var d = new Date();
-    var d_do_math = d.setDate(d.getDate()+do_math)
-    
-    this.setState(
-      {
-        oneDayBack: weekDays[getISODay( d_do_math )-1],
-        twoDayBack: weekDays[getISODay( d_do_math )-2]
-      }
-    );
-
-  }
-
 
 
   _shareQuoteOfTheDay = () => {
@@ -229,19 +236,19 @@ class MenuScreen extends React.Component {
             paddingLeft: 15,
             paddingRight: 15,}}> 
         <View style={{flex:1,borderRightColor: 'white', borderRightWidth: 1,}} >
-          <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,0,0)}>
+          <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,0)}>
             <Text style={{color: 'white', textAlign:'center', fontFamily:'ptsans',fontSize: 16, fontWeight: this.state.fontWeightnavIndex0}}>Heute</Text>
           </TouchableOpacity>
         </View>
 
         <View style={{flex:1,borderRightColor: 'white', borderRightWidth: 1}} >
-          <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,-1,1)}>
+          <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,1)}>
             <Text style={{color: 'white', textAlign:'center', fontFamily:'ptsans',fontSize: 16,fontWeight: this.state.fontWeightnavIndex1}}>{this.state.oneDayBack}</Text>
           </TouchableOpacity>
         </View>
         
         <View style={{flex:1,}} >
-          <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,-2,2)}>
+          <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,2)}>
             <Text style={{color: 'white', textAlign:'center', fontFamily:'ptsans', fontSize: 16,fontWeight: this.state.fontWeightnavIndex2}}>{this.state.twoDayBack}</Text>
           </TouchableOpacity>
         </View>
