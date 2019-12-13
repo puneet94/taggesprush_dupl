@@ -12,6 +12,9 @@ import {
   ImageBackground,
 } from 'react-native';
 
+import appVars from '../../appVars';
+import appStyles from '../../appStyles';
+
 import {  Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
 import { getDay, getDayOfYear,getISODay } from 'date-fns'
 import * as data2019 from '../../../data_2019.json';
@@ -51,27 +54,27 @@ class MenuScreen extends React.Component {
         
         </View>
       <Menu
-      style={{marginRight: 10,}}
-      onSelect={value =>  navigation.navigate(value)}>
-        <MenuTrigger customStyles={{ TriggerTouchableComponent: TouchableOpacity }} >
+      style={{paddingRight: 10,}}
+      onSelect={value => navigation.navigate(value)}>
+        <MenuTrigger style={{paddingLeft: 10, paddingRight:10}} customStyles={{ TriggerTouchableComponent: TouchableOpacity }} >
           
         <Image
             style={{width: 24, height: 24}}
             source={require('../../../_images/basics/icon_dots.png')}
           />
         </MenuTrigger>
-        <MenuOptions optionsContainerStyle={{width: 200, marginTop:8, backgroundColor: 'white'}}>
-        <MenuOption value={'Settings'} style={{width: 200,}}>
-            <Text style={{fontFamily:'ptsans',fontSize: 16, color: '#968154'}}>Einstellungen</Text>
+        <MenuOptions optionsContainerStyle={appStyles.subMenuContainer}>
+        <MenuOption value={'Settings'} style={appStyles.subMenuChild}>
+            <Text style={appStyles.subMenuText}>Einstellungen</Text>
           </MenuOption>
-          <View style={{backgroundColor: '#cccccc', height: 1}}></View>
-          <MenuOption value={'Imprint'} style={{width: 200,}}>
-            <Text style={{fontFamily:'ptsans',fontSize: 16, color: '#968154'}}>Impressum</Text>
+          <View style={appStyles.subMenuDivider}></View>
+          <MenuOption value={'Imprint'} style={appStyles.subMenuChild}>
+            <Text style={appStyles.subMenuText}>Impressum</Text>
           </MenuOption>
 
-          <View style={{backgroundColor: '#cccccc', height: 1}}></View>
-          <MenuOption value={'PrivacyPolicy'} style={{width: 200}}>
-            <Text style={{fontFamily:'ptsans',fontSize: 16, color: '#968154'}}>Datenschutz</Text>
+          <View style={appStyles.subMenuDivider}></View>
+            <MenuOption value={'PrivacyPolicy'} style={appStyles.subMenuChild}>
+            <Text style={appStyles.subMenuText}>Datenschutz</Text>
           </MenuOption>
         </MenuOptions>
       </Menu>
@@ -228,28 +231,22 @@ class MenuScreen extends React.Component {
     
     <View style={{flex:1}}>
 
-      <View style={{flexDirection: 'row',
-            justifyContent:'space-between',
-            backgroundColor:'#23859e',
-            height: 40,
-            padding: 10,
-            paddingLeft: 15,
-            paddingRight: 15,}}> 
-        <View style={{flex:1,borderRightColor: 'white', borderRightWidth: 1,}} >
+      <View style={appStyles.tabMenu}> 
+        <View style={appStyles.tabMenuItem} >
           <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,0)}>
-            <Text style={{color: 'white', textAlign:'center', fontFamily:'ptsans',fontSize: 16, fontWeight: this.state.fontWeightnavIndex0}}>Heute</Text>
+            <Text style={[appStyles.tabMenuText,{fontWeight: this.state.fontWeightnavIndex0}]}>Heute</Text>
           </TouchableOpacity>
         </View>
 
-        <View style={{flex:1,borderRightColor: 'white', borderRightWidth: 1}} >
+        <View style={appStyles.tabMenuItem} >
           <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,1)}>
-            <Text style={{color: 'white', textAlign:'center', fontFamily:'ptsans',fontSize: 16,fontWeight: this.state.fontWeightnavIndex1}}>{this.state.oneDayBack}</Text>
+            <Text style={[appStyles.tabMenuText,{fontWeight: this.state.fontWeightnavIndex1}]}>{this.state.oneDayBack}</Text>
           </TouchableOpacity>
         </View>
         
         <View style={{flex:1,}} >
           <TouchableOpacity onPress={ this._setQuoteOfTheDay.bind(this,2)}>
-            <Text style={{color: 'white', textAlign:'center', fontFamily:'ptsans', fontSize: 16,fontWeight: this.state.fontWeightnavIndex2}}>{this.state.twoDayBack}</Text>
+            <Text style={[appStyles.tabMenuText,{fontWeight: this.state.fontWeightnavIndex2}]}>{this.state.twoDayBack}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -265,7 +262,7 @@ class MenuScreen extends React.Component {
     />
 
 
-          <Text style={{color: '#968154', fontFamily:'ptsans', fontSize: 18, textAlign:'center', lineHeight: 25, padding: 15, top: -80}}>{this.state.quote}</Text>
+          <Text style={appStyles.quoteText}>{this.state.quote}</Text>
 
     
     </ScrollView>
